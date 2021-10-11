@@ -14,7 +14,9 @@ jobs:
           python-version: '3.8'
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - run: make test-pytest
+      - run: cd tests
+	pytest -vv
+	cd ..
   docker:
     runs-on: ubuntu-latest
     steps:
