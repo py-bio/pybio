@@ -1,4 +1,4 @@
-FROM python:3.8-alpine
+FROM python:3.8
 
 LABEL maintainer="andrew@nijmeh.xyz"
 LABEL description="A library to simulate & visualize proteins, and protein folding."
