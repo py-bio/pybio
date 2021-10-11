@@ -1,0 +1,43 @@
+name: lint
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  black:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+      - run: make lint-black
+  pylint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v1
+        with:
+          python-version: '3.8'
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - run: make lint-pylint
+  hadolint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Linting Dockerfile
+        uses: brpaz/hadolint-action@master
+        with:
+          dockerfile: 'prod.Dockerfile'
+      - name: Linting dev.Dockerfile
+        uses: brpaz/hadolint-action@master
+        with:
+          dockerfile: 'dev.Dockerfile'
+      - name: Linting dev.lint.Dockerfile
+        uses: brpaz/hadolint-action@master
+        with:
+          dockerfile: 'dev.lint.Dockerfile'
