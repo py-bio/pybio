@@ -1,10 +1,9 @@
-name: Contributors
+name: contributors
 
 on:
   push:
     branches:
       - main
-      - master
 
 jobs:
   contributor_list:
