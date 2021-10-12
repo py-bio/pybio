@@ -1,15 +1,26 @@
 name: test
 
 on:
-  - push 
+  - push
   - pull_request
 
 jobs:
   pytest:
-    runs-on: ubuntu-latest
-    steps: 
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-python@v1
         with:
           python-version: '3.8'
+      - uses: dschep/install-poetry-action@v1.3
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - run: make test-pytest
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
       - run: make test-in-docker
